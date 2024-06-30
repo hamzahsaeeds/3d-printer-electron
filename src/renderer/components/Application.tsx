@@ -37,13 +37,17 @@ const Application: React.FC = () => {
   }
 
   function handlePrintClick() {
-    const fileInput = document.getElementById("file-selector");
+    const fileInput: HTMLInputElement | null = document.getElementById("file-selector") as HTMLInputElement;
+    if (!fileInput) {
+      alert("Please select a file to print.");
+      return;
+    }
     if (fileInput.files.length === 0) {
       alert("Please select a file to print.");
       return;
     }
     const filePath = fileInput.files[0].path;
-
+  
     // Send a POST request to the server endpoint
     fetch('my-app://run-script', {
       method: 'POST',
